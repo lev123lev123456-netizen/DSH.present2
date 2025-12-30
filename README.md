@@ -1,1 +1,1543 @@
-# DSH.present2
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пряничный домик - Карусель пожеланий</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Neue', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8e0b0 0%, #f5d7a3 30%, #f2cf96 70%, #f8e0b0 100%);
+            color: #5a3921;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .gingerbread-house-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(63deg, rgba(160, 82, 45, 0.1) 25%, transparent 25%),
+                linear-gradient(117deg, rgba(160, 82, 45, 0.1) 25%, transparent 25%),
+                linear-gradient(63deg, transparent 75%, rgba(160, 82, 45, 0.1) 75%),
+                linear-gradient(117deg, transparent 75%, rgba(160, 82, 45, 0.1) 75%),
+                radial-gradient(circle at 15% 25%, rgba(220, 20, 60, 0.15) 8px, transparent 8px),
+                radial-gradient(circle at 85% 75%, rgba(34, 139, 34, 0.15) 8px, transparent 8px),
+                radial-gradient(circle at 25% 85%, rgba(255, 215, 0, 0.15) 6px, transparent 6px),
+                radial-gradient(circle at 75% 15%, rgba(138, 43, 226, 0.15) 6px, transparent 6px),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 2px, transparent 2px),
+                radial-gradient(circle at 20% 40%, rgba(255, 255, 255, 0.2) 3px, transparent 3px),
+                radial-gradient(circle at 80% 60%, rgba(255, 255, 255, 0.2) 3px, transparent 3px),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a0522d' fill-opacity='0.1'%3E%3Cpath d='M50 20l10 30 30-10-10 30 30 10-30 10 10 30-30-10-10 30-10-30-30 10 10-30-30-10 30-10-10-30 30 10z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 
+                60px 60px,
+                60px 60px,
+                60px 60px,
+                60px 60px,
+                200px 200px,
+                180px 180px,
+                170px 170px,
+                160px 160px,
+                120px 120px,
+                100px 100px,
+                100px 100px,
+                100px 100px;
+            z-index: -2;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        
+        .sugar-dust {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0 30px;
+            position: relative;
+            margin-bottom: 50px;
+            background: linear-gradient(145deg, #d2691e, #a0522d);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.4);
+            border-bottom: 8px solid #8b4513;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 20px,
+                #ffd700 20px,
+                #ffd700 40px
+            );
+            z-index: 1;
+        }
+        
+        .header-title {
+            font-size: 3.2rem;
+            color: #fff;
+            text-shadow: 
+                3px 3px 0 #8b4513,
+                5px 5px 0 rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px;
+            letter-spacing: 1.5px;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-subtitle {
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 #8b4513;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-decoration {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 40px;
+            z-index: 2;
+        }
+        
+        .gingerbread-window {
+            width: 60px;
+            height: 60px;
+            background: #8b4513;
+            border: 4px solid #ffd700;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gingerbread-window::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: linear-gradient(145deg, #ffd700, #ffa500);
+            border-radius: 8px;
+        }
+        
+        .gingerbread-window::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #8b4513;
+            transform: translateY(-50%);
+        }
+        
+        .main-content-wrapper {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 50px;
+            align-items: flex-start;
+        }
+        
+        .main-text {
+            flex: 0 0 60%;
+            background: linear-gradient(145deg, #fffaf0, #f5f0e6);
+            border-radius: 0 0 25px 25px;
+            padding: 50px 40px;
+            border: 6px solid #a0522d;
+            border-top: none;
+            box-shadow: 
+                0 20px 40px rgba(139, 69, 19, 0.3),
+                inset 0 0 30px rgba(255, 215, 0, 0.1);
+            position: relative;
+            color: #5a3921;
+        }
+        
+        .main-text::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 20px;
+            right: 20px;
+            height: 12px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            border-radius: 6px;
+        }
+        
+        .main-image {
+            flex: 0 0 40%;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 6px solid #a0522d;
+            box-shadow: 
+                0 20px 40px rgba(139, 69, 19, 0.3),
+                inset 0 0 30px rgba(255, 215, 0, 0.1);
+            position: relative;
+            height: 600px;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(0.2) brightness(1.05);
+            transition: transform 0.5s ease;
+        }
+        
+        .main-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .main-image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(139, 69, 19, 0.9), transparent);
+            color: #ffd700;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .main-title {
+            font-size: 2.5rem;
+            color: #8b4513;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 
+                2px 2px 0 #ffd700,
+                -1px -1px 0 #ffd700;
+            padding-bottom: 15px;
+            border-bottom: 3px dotted #d2691e;
+            font-weight: 700;
+        }
+        
+        .main-content {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin: 30px 0;
+            padding: 30px;
+            background: rgba(255, 248, 220, 0.8);
+            border-radius: 15px;
+            border-left: 8px solid #d2691e;
+            color: #5a3921;
+            box-shadow: inset 0 2px 10px rgba(139, 69, 19, 0.1);
+        }
+        
+        .main-content p {
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .main-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .carousel-section {
+            margin: 60px 0;
+            position: relative;
+        }
+        
+        .carousel-fence {
+            position: relative;
+            padding: 30px 0;
+        }
+        
+        .carousel-fence::before,
+        .carousel-fence::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(90deg, 
+                #8b4513 0%, 
+                #8b4513 10%, 
+                transparent 10%, 
+                transparent 20%, 
+                #8b4513 20%, 
+                #8b4513 30%, 
+                transparent 30%, 
+                transparent 40%, 
+                #8b4513 40%, 
+                #8b4513 50%, 
+                transparent 50%, 
+                transparent 60%, 
+                #8b4513 60%, 
+                #8b4513 70%, 
+                transparent 70%, 
+                transparent 80%, 
+                #8b4513 80%, 
+                #8b4513 90%, 
+                transparent 90%, 
+                transparent 100%
+            );
+            background-size: 100px 100%;
+        }
+        
+        .carousel-fence::before {
+            top: 0;
+        }
+        
+        .carousel-fence::after {
+            bottom: 0;
+        }
+        
+        .carousel-container {
+            background: linear-gradient(145deg, #fffaf0, #f5f0e6);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 20px 0;
+            border: 6px solid #a0522d;
+            box-shadow: 
+                0 20px 40px rgba(139, 69, 19, 0.3),
+                inset 0 0 30px rgba(255, 215, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .carousel-title {
+            text-align: center;
+            font-size: 2.3rem;
+            color: #8b4513;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(255, 215, 0, 0.5);
+            padding-bottom: 15px;
+            border-bottom: 3px dotted #d2691e;
+            font-weight: 700;
+        }
+        
+        .carousel-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding: 40px 0;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
+        }
+        
+        .carousel-item {
+            flex: 0 0 20%;
+            padding: 0 15px;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0.5;
+            transform: scale(0.85);
+        }
+        
+        .carousel-item.active {
+            flex: 0 0 30%;
+            opacity: 1;
+            transform: scale(1);
+            z-index: 2;
+        }
+        
+        .carousel-item.prev {
+            transform: scale(0.9) translateX(-10%);
+            opacity: 0.7;
+        }
+        
+        .carousel-item.next {
+            transform: scale(0.9) translateX(10%);
+            opacity: 0.7;
+        }
+        
+        .carousel-link {
+            display: block;
+            background: linear-gradient(145deg, #fffaf0, #f5f0e6);
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-align: center;
+            text-decoration: none;
+            color: #5a3921;
+            box-shadow: 
+                0 15px 30px rgba(139, 69, 19, 0.3),
+                0 0 0 3px #d2691e,
+                0 0 0 6px #ffd700;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #fff;
+        }
+        
+        .carousel-link:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 25px 45px rgba(139, 69, 19, 0.4),
+                0 0 0 3px #d2691e,
+                0 0 0 6px #ffd700,
+                0 0 25px rgba(255, 215, 0, 0.4);
+        }
+        
+        .carousel-link.active {
+            box-shadow: 
+                0 30px 55px rgba(139, 69, 19, 0.5),
+                0 0 0 4px #d2691e,
+                0 0 0 8px #ffd700,
+                0 0 35px rgba(255, 215, 0, 0.5);
+        }
+        
+        .carousel-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, 
+                #ff6b6b, 
+                #ffa500, 
+                #ffd700, 
+                #4ecdc4, 
+                #c44569
+            );
+            background-size: 300% 100%;
+            animation: candyStripe 4s infinite linear;
+        }
+        
+        @keyframes candyStripe {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 300% 0%; }
+        }
+        
+        .carousel-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #8b4513;
+            color: #ffd700;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            transition: all 0.3s;
+            border: 3px solid #ffd700;
+        }
+        
+        .carousel-link:hover .carousel-number {
+            transform: scale(1.1);
+            background: #a0522d;
+        }
+        
+        .carousel-image-container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            margin: 20px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid #8b4513;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            background: #fff;
+        }
+        
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+            filter: sepia(0.3) brightness(1.05);
+        }
+        
+        .carousel-link:hover .carousel-image {
+            transform: scale(1.08);
+            filter: sepia(0.2) brightness(1.1);
+        }
+        
+        .carousel-link-title {
+            font-size: 1.8rem;
+            color: #8b4513;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .carousel-link:hover .carousel-link-title {
+            color: #a0522d;
+            transform: translateY(-2px);
+        }
+        
+        .carousel-link-subtitle {
+            font-size: 1.1rem;
+            color: #a0522d;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .carousel-icon {
+            margin-top: 15px;
+            font-size: 1.8rem;
+            color: #ffa500;
+            opacity: 0.8;
+            transition: all 0.3s;
+        }
+        
+        .carousel-link:hover .carousel-icon {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+        
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(145deg, #8b4513, #a0522d);
+            color: #ffd700;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.8rem;
+            box-shadow: 
+                0 8px 20px rgba(139, 69, 19, 0.4),
+                0 0 0 3px #ffd700;
+            z-index: 10;
+            transition: all 0.3s ease;
+            border: none;
+            opacity: 0.9;
+        }
+        
+        .carousel-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 
+                0 12px 25px rgba(139, 69, 19, 0.6),
+                0 0 0 3px #ffd700,
+                0 0 15px rgba(255, 215, 0, 0.5);
+            background: linear-gradient(145deg, #a0522d, #8b4513);
+            opacity: 1;
+        }
+        
+        .carousel-btn.prev {
+            left: 15px;
+        }
+        
+        .carousel-btn.next {
+            right: 15px;
+        }
+        
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+        
+        .carousel-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ffecb3, #fff8e1);
+            border: 3px solid #8b4513;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .carousel-indicator.active {
+            transform: scale(1.4);
+            border-color: #ffa500;
+            background: #ffa500;
+            box-shadow: 0 0 12px rgba(255, 165, 0, 0.5);
+        }
+        
+        .carousel-indicator:hover {
+            transform: scale(1.2);
+            border-color: #ffa500;
+        }
+        
+        .carousel-info {
+            text-align: center;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 248, 225, 0.8);
+            border-radius: 15px;
+            border: 2px dashed #d2691e;
+        }
+        
+        .carousel-counter {
+            font-size: 1.3rem;
+            color: #8b4513;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .page-content {
+            display: none;
+            background: linear-gradient(145deg, #fffaf0, #f5f0e6);
+            border-radius: 25px;
+            padding: 50px 40px;
+            margin: 40px 0;
+            border: 6px solid #a0522d;
+            box-shadow: 
+                0 20px 40px rgba(139, 69, 19, 0.3),
+                inset 0 0 30px rgba(255, 215, 0, 0.1);
+            position: relative;
+            color: #5a3921;
+        }
+        
+        .page-content.active {
+            display: block;
+            animation: pageAppear 0.5s ease-out;
+        }
+        
+        @keyframes pageAppear {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            color: #8b4513;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 
+                2px 2px 0 #ffd700,
+                -1px -1px 0 #ffd700;
+            padding-bottom: 15px;
+            border-bottom: 3px dotted #d2691e;
+            font-weight: 700;
+        }
+        
+        .page-images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .page-image {
+            flex: 1;
+            min-width: 300px;
+            max-width: 450px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 
+                0 15px 30px rgba(139, 69, 19, 0.3),
+                0 0 0 3px #d2691e;
+            transition: transform 0.4s;
+            background: #fff;
+        }
+        
+        .page-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .page-image img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            filter: sepia(0.2) brightness(1.05);
+        }
+        
+        .page-image-caption {
+            background: linear-gradient(to bottom, #8b4513, #a0522d);
+            padding: 15px;
+            text-align: center;
+            color: #ffd700;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .page-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin: 30px 0;
+            padding: 30px;
+            background: rgba(255, 248, 225, 0.8);
+            border-radius: 15px;
+            border-left: 8px solid #d2691e;
+            color: #5a3921;
+            font-weight: 500;
+        }
+        
+        .back-button {
+            display: block;
+            width: 220px;
+            margin: 30px auto;
+            padding: 16px;
+            background: linear-gradient(to bottom, #8b4513, #a0522d);
+            color: #ffd700;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            box-shadow: 
+                0 8px 20px rgba(139, 69, 19, 0.4),
+                0 0 0 3px #ffd700;
+            transition: all 0.3s;
+            border: 2px solid #ffa500;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 12px 25px rgba(139, 69, 19, 0.5),
+                0 0 0 3px #ffd700,
+                0 0 15px rgba(255, 215, 0, 0.4);
+            background: linear-gradient(to bottom, #a0522d, #8b4513);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+            border-top: 6px solid #8b4513;
+            color: #fff;
+            font-size: 1.2rem;
+            background: linear-gradient(145deg, #a0522d, #8b4513);
+            border-radius: 0 0 25px 25px;
+            position: relative;
+            box-shadow: 0 -10px 30px rgba(139, 69, 19, 0.4);
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 20px;
+            right: 20px;
+            height: 12px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            border-radius: 6px;
+        }
+        
+        .footer p {
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .footer p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .snow-button {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(145deg, #8b4513, #a0522d);
+            color: #ffd700;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            box-shadow: 
+                0 8px 20px rgba(139, 69, 19, 0.4),
+                0 0 0 3px #ffd700,
+                0 0 0 6px #8b4513;
+            z-index: 100;
+            transition: all 0.3s;
+            border: 2px solid #ffa500;
+        }
+        
+        .snow-button:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: linear-gradient(145deg, #a0522d, #8b4513);
+            box-shadow: 
+                0 12px 25px rgba(139, 69, 19, 0.5),
+                0 0 0 3px #ffd700,
+                0 0 0 6px #8b4513,
+                0 0 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        .snow-button.active {
+            background: linear-gradient(145deg, #4682b4, #5d9ec9);
+            box-shadow: 
+                0 8px 20px rgba(70, 130, 180, 0.4),
+                0 0 0 3px #87ceeb,
+                0 0 0 6px #4682b4;
+        }
+        
+        .page-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #8b4513;
+            color: #ffd700;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ffd700;
+        }
+        
+        .floating-candies {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .candy {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: float 6s infinite ease-in-out;
+            filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.2));
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        @media (max-width: 1200px) {
+            .main-content-wrapper {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .main-text,
+            .main-image {
+                flex: 0 0 100%;
+            }
+            
+            .main-image {
+                height: 400px;
+            }
+            
+            .carousel-item {
+                flex: 0 0 25%;
+            }
+            
+            .carousel-item.active {
+                flex: 0 0 35%;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .header-title {
+                font-size: 2.5rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .carousel-item {
+                flex: 0 0 33.333%;
+            }
+            
+            .carousel-item.active {
+                flex: 0 0 40%;
+            }
+            
+            .carousel-btn {
+                width: 55px;
+                height: 55px;
+                font-size: 1.6rem;
+            }
+            
+            .main-image {
+                height: 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 2.2rem;
+            }
+            
+            .main-title, .carousel-title, .page-title {
+                font-size: 2rem;
+            }
+            
+            .carousel-item {
+                flex: 0 0 50%;
+            }
+            
+            .carousel-item.active {
+                flex: 0 0 60%;
+            }
+            
+            .carousel-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+            }
+            
+            .carousel-btn.prev {
+                left: 10px;
+            }
+            
+            .carousel-btn.next {
+                right: 10px;
+            }
+            
+            .carousel-container, .main-text, .page-content {
+                padding: 30px;
+            }
+            
+            .main-image {
+                height: 300px;
+            }
+            
+            .main-content, .page-text {
+                padding: 20px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-title {
+                font-size: 1.8rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .carousel-item {
+                flex: 0 0 100%;
+            }
+            
+            .carousel-item.active {
+                flex: 0 0 100%;
+            }
+            
+            .carousel-container, .main-text, .page-content {
+                padding: 20px 15px;
+            }
+            
+            .carousel-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+            
+            .carousel-indicators {
+                gap: 10px;
+            }
+            
+            .main-image {
+                height: 250px;
+            }
+            
+            .main-content, .page-text {
+                padding: 15px;
+                font-size: 1rem;
+            }
+            
+            .main-title, .carousel-title, .page-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gingerbread-house-bg"></div>
+    <div class="sugar-dust"></div>
+    <div class="floating-candies" id="floatingCandies"></div>
+    
+    <div class="container">
+        <header>
+            <h1 class="header-title">🏠 Новый год в пряничном домике 🍪</h1>
+            <p class="header-subtitle">Дорогая! Мы провели вместе 10 быстротечных месяцев. Этот сайт я создал в честь нашей долгой и продолжающейся любви в Новый год</p>
+            <div class="header-decoration">
+                <div class="gingerbread-window"></div>
+                <div class="gingerbread-window"></div>
+                <div class="gingerbread-window"></div>
+            </div>
+        </header>
+        
+        <div class="main-content-wrapper">
+            <div class="main-text" id="mainText">
+                <h2 class="main-title">Дашенька! ❤️</h2>
+                
+                <div class="main-content">
+                    <p>Дорогая моя, в этот волшебный праздник я построил для тебя целый пряничный домик с напоминанием о том, какой путь из 10 пройденных, но не последних месяцев!</p>
+                    <p>Каждая страничка этого домика возвращает нас во времени и наполняет приятными воспоминаниями.</p>
+                    <p>Внизу есть каруселька с 10 нашими месяцами - кликай по ним, чтобы путешествовать по нашим воспоминаниям.</p>
+                    <p>Ты — самый дорогой житель моего пряничного домика, и я хочу, чтобы каждое воспоминание этого домика приносило тебе радость, счастье и тепло! Мы пройдём путь, многократно превосходящий нынешний.</p>
+                    <p>Я очень тебя люблю, моя гордость ❤️</p>
+                </div>
+            </div>
+            
+            <div class="main-image">
+                <img src="майн.jpg" alt="Пряничный домик">
+                <div class="main-image-caption">Волшебный пряничный домик, построенный специально для тебя!</div>
+            </div>
+        </div>
+        
+        <div class="carousel-section">
+            <div class="carousel-fence">
+                <div class="carousel-container">
+                    <h2 class="carousel-title">Выбери месяц из карусельки:</h2>
+                    
+                    <div class="carousel-wrapper">
+                        <button class="carousel-btn prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="carousel-track" id="carouselTrack">
+                        </div>
+                        
+                        <button class="carousel-btn next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="carousel-indicators" id="carouselIndicators">
+                    </div>
+                    
+                    <div class="carousel-info">
+                        <div class="carousel-counter" id="carouselCounter">Месяц 1 из 10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="pagesContainer">
+        </div>
+        
+        <div class="footer">
+            <p>Милая, ты самое дорогое, что у меня есть 🎄✨</p>
+            <p>Я хочу, чтобы мы провели не один следующий год вместе и были счастливыми! 🍪</p>
+            <p>Пусть этот пряничный домик всегда будет твоим счастливым местом!</p>
+            <p>💝💝 Я люблю тебя, дорогая 💝💝</p>
+        </div>
+    </div>
+    
+    <div class="snow-button" id="snowButton">
+        <i class="fas fa-snowflake"></i>
+    </div>
+    
+    <script>
+        const pageData = [
+            {
+                id: 1,
+                image: "март2.jpg",
+                title: "Март",
+                subtitle: "1-ый месяц наших отношений",
+                pageTitle: "Оттаивающий Март",
+                images: [
+                    {url: "март.jpg", caption: "ПЕРВЫЙ поход в фамилию у 42!!!"},
+                    {url: "март3.jpg", caption: "Любимый человек в жизни"}
+                ],
+                text: "Это месяц, в котором мы с тобой познакомились. В марте было много интересного, но самый важный момент в марте - это появление тебя в моей жизни."
+            },
+            {
+                id: 2,
+                image: "апр2.jpg",
+                title: "Апрель",
+                subtitle: "2-ой месяц наших отношений",
+                pageTitle: "Родной Апрель",
+                images: [
+                    {url: "апр.jpg", caption: "Наши дни рождения!"},
+                    {url: "апр3.jpg", caption: "Я ГОЛОДНЫЙ"}
+                ],
+                text: "Это месяц, в котором союз наших сердец был закреплен практикой, а наши чувства стали только сильнее."
+            },
+            {
+                id: 3,
+                image: "май (3).jpg",
+                title: "Май",
+                subtitle: "3-ий месяц наших отношений",
+                pageTitle: "Теплый Май",
+                images: [
+                    {url: "майй.jpg", caption: "Ты дарила мне очень много тепла"},
+                    {url: "май.jpg", caption: "Евровидение и ЭСПРЕССО МАКИЯТОО"}
+                ],
+                text: "Этот месяц запомнился мне теплее всех остальных 05-х месяцев за все мои (нынешние 16) лет, а виновница - это ты."
+            },
+            {
+                id: 4,
+                image: "июн3.jpg",
+                title: "Июнь",
+                subtitle: "4-ый месяц наших отношений",
+                pageTitle: "Наш первый Июнь",
+                images: [
+                    {url: "июн2.jpg", caption: "САМЫЙ добрый июнь!"},
+                    {url: "июн.jpg", caption: "ГОЛОВКИН на охоте"}
+                ],
+                text: "Это самое значимое лето в моей жизни потому, что я провел его с тобой, радость моя."
+            },
+            {
+                id: 5,
+                image: "июл3.jpg",
+                title: "Июль",
+                subtitle: "5-ый месяц наших отношений!",
+                pageTitle: "Любимый Июль",
+                images: [
+                    {url: "июл2.jpg", caption: "Первая наша значимая дата"},
+                    {url: "июл.jpg", caption: "Казалось, что учеба так далеко)"}
+                ],
+                text: "Говорят, что время течет быстрее с любимыми людьми. Этот июль пролетел словно легкий теплый ветерок!"
+            },
+            {
+                id: 6,
+                image: "авг3.jpg",
+                title: "Август",
+                subtitle: "6-ой месяц наших отношений",
+                pageTitle: "Август счастья",
+                images: [
+                    {url: "авг.jpg", caption: "Твоя поездка в црод и мое бесконечное одиночество"},
+                    {url: "авг (2).jpg", caption: "Приближался сентябрь..."}
+                ],
+                text: "Этот месяц был для меня очень тяжелым! Потому, что поездка в црод нас разлучила, и твое пусть недолгое пребывание там, казалось бесконечным, но несмотря на это я получил вознаграждение тем, что снова тебя увидел, снова влюбился и снова смог тебя поцеловать."
+            },
+            {
+                id: 7,
+                image: "сен.jpg",
+                title: "Сентябрь",
+                subtitle: "7-ой месяц наших отношений",
+                pageTitle: "Сентябрь разлуки",
+                images: [
+                    {url: "сен (2).jpg", caption: "Светлогорск стал светлым ТОЛЬКО благодаря ТЕБЕ!!!"},
+                    {url: "сен (3).jpg", caption: "Каштан"}
+                ],
+                text: "Только столкнувшись с разлукой начинаешь ценить беззаботные деньки, нам друг друга не хватает, но я стараюсь заполнять пустоту своим присутствием! Люблю тебяяя."
+            },
+            {
+                id: 8,
+                image: "окт.jpg",
+                title: "Октябрь",
+                subtitle: "8-ой месяц наших отношений",
+                pageTitle: "Чудный Октябрь",
+                images: [
+                    {url: "окт (2).jpg", caption: "Начинало холодать, но твоя любовь меня грела"},
+                    {url: "окт (3).jpg", caption: "Ты назвала меня пряней в первый раз"}
+                ],
+                text: "Уже в октябре темнеть стало значительно раньше, но ты освещала мою студенческую жизнь как лучик света, ведь ты мое солнышко."
+            },
+            {
+                id: 9,
+                image: "ноябр.jpg",
+                title: "Ноябрь",
+                subtitle: "9-ый месяц наших отношений",
+                pageTitle: "Талпак бАб Ноябрь",
+                images: [
+                    {url: "ноябр .jpg", caption: "Мы в первый раз сходили в будущее место нашей свадьбы"},
+                    {url: "ноябрр.jpg", caption: "Самый счастливый концерт в моей жизни - это мазелаф с тобой"}
+                ],
+                text: "В этом месяце Жека подвез нас к озеру и мы пошли в талпак боб обжираться сырным чебуреком!!! Лучший романтический ужин!"
+            },
+            {
+                id: 10,
+                image: "декабр3.jpg",
+                title: "Декабрь",
+                subtitle: "10-ый месяц наших отношений",
+                pageTitle: "Этот Декабрь",
+                images: [
+                    {url: "декабр.jpg", caption: "Ты всегда была чудесно красивой"},
+                    {url: "декабр (2).jpg", caption: "ОООО СИКС СЕВЕН МЕМАСЭК"}
+                ],
+                text: "Это первый наш Новый год. Мы провели почти 12 месяцев в любви и верности, и я знаю, что так будет продолжаться много лет вперед. Я ЛЮБЛЮ ТЕБЯ, ДОРОГАЯ!"
+            }
+        ];
+        
+        let currentIndex = 0;
+        const itemsPerView = 5;
+        
+        function createFloatingCandies() {
+            const container = document.getElementById('floatingCandies');
+            const candyTypes = ['🍬', '🍭', '🍫', '🍪', '🧁', '🎂', '🍩', '💖', '⭐', '🌟'];
+            
+            for (let i = 0; i < 20; i++) {
+                const candy = document.createElement('div');
+                candy.className = 'candy';
+                candy.innerHTML = candyTypes[Math.floor(Math.random() * candyTypes.length)];
+                
+                candy.style.left = Math.random() * 100 + 'vw';
+                candy.style.top = Math.random() * 100 + 'vh';
+                
+                const duration = Math.random() * 4 + 4;
+                candy.style.animationDuration = duration + 's';
+                
+                const size = Math.random() * 20 + 15;
+                candy.style.fontSize = size + 'px';
+                
+                candy.style.animationDelay = Math.random() * 3 + 's';
+                
+                const colors = ['#FF6B6B', '#4ECDC4', '#FFD166', '#C44569', '#118AB2'];
+                candy.style.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(candy);
+            }
+        }
+        
+        function generateCarousel() {
+            const carouselTrack = document.getElementById('carouselTrack');
+            const indicatorsContainer = document.getElementById('carouselIndicators');
+            
+            carouselTrack.innerHTML = '';
+            indicatorsContainer.innerHTML = '';
+            
+            pageData.forEach((page, index) => {
+                const carouselItem = document.createElement('div');
+                carouselItem.className = 'carousel-item';
+                if (index === 0) carouselItem.classList.add('active');
+                if (index === pageData.length - 1) carouselItem.classList.add('prev');
+                if (index === 1) carouselItem.classList.add('next');
+                
+                const carouselLink = document.createElement('a');
+                carouselLink.href = `#page${page.id}`;
+                carouselLink.className = 'carousel-link';
+                if (index === 0) carouselLink.classList.add('active');
+                carouselLink.dataset.pageId = page.id;
+                carouselLink.dataset.index = index;
+                
+                carouselLink.innerHTML = `
+                    <div class="carousel-number">${page.id}</div>
+                    <div class="carousel-image-container">
+                        <img src="${page.image}" alt="${page.title}" class="carousel-image">
+                    </div>
+                    <div class="carousel-link-title">${page.title}</div>
+                    <div class="carousel-link-subtitle">${page.subtitle}</div>
+                    <div class="carousel-icon">💖</div>
+                `;
+                
+                carouselItem.appendChild(carouselLink);
+                carouselTrack.appendChild(carouselItem);
+                
+                const indicator = document.createElement('div');
+                indicator.className = 'carousel-indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.dataset.index = index;
+                indicatorsContainer.appendChild(indicator);
+            });
+            
+            updateCarousel();
+            updateCarouselCounter();
+        }
+        
+        function updateCarousel() {
+            const carouselTrack = document.getElementById('carouselTrack');
+            const items = document.querySelectorAll('.carousel-item');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            const links = document.querySelectorAll('.carousel-link');
+            
+            items.forEach(item => {
+                item.classList.remove('active', 'prev', 'next');
+            });
+            
+            links.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+            
+            const totalItems = pageData.length;
+            
+            for (let i = -2; i <= 2; i++) {
+                let index = (currentIndex + i + totalItems) % totalItems;
+                
+                if (i === 0) {
+                    items[index].classList.add('active');
+                    links[index].classList.add('active');
+                } else if (i === -1) {
+                    items[index].classList.add('prev');
+                } else if (i === 1) {
+                    items[index].classList.add('next');
+                }
+            }
+            
+            indicators[currentIndex].classList.add('active');
+            
+            const itemWidth = 100 / itemsPerView;
+            const offset = -currentIndex * itemWidth + itemWidth * 2;
+            carouselTrack.style.transform = `translateX(${offset}%)`;
+            
+            updateCarouselCounter();
+        }
+        
+        function updateCarouselCounter() {
+            const counter = document.getElementById('carouselCounter');
+            counter.textContent = `Месяц ${currentIndex + 1} из ${pageData.length}`;
+        }
+        
+        function generatePages() {
+            const pagesContainer = document.getElementById('pagesContainer');
+            
+            pageData.forEach(page => {
+                const pageElement = document.createElement('div');
+                pageElement.className = 'page-content';
+                pageElement.id = `page${page.id}`;
+                
+                pageElement.innerHTML = `
+                    <div class="page-counter">Месяц ${page.id} из 10</div>
+                    <h2 class="page-title">${page.pageTitle}</h2>
+                    
+                    <div class="page-images">
+                        <div class="page-image">
+                            <img src="${page.images[0].url}" alt="${page.title}">
+                            <div class="page-image-caption">${page.images[0].caption}</div>
+                        </div>
+                        
+                        <div class="page-image">
+                            <img src="${page.images[1].url}" alt="${page.title}">
+                            <div class="page-image-caption">${page.images[1].caption}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="page-text">
+                        <p>${page.text}</p>
+                    </div>
+                    
+                    <a href="#mainText" class="back-button">Вернуться к карусельке</a>
+                `;
+                
+                pagesContainer.appendChild(pageElement);
+            });
+        }
+        
+        function setupCarouselClicks() {
+            const carouselTrack = document.getElementById('carouselTrack');
+            const prevBtn = document.querySelector('.carousel-btn.prev');
+            const nextBtn = document.querySelector('.carousel-btn.next');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            
+            prevBtn.addEventListener('click', () => {
+                goToPrevSlide();
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                goToNextSlide();
+            });
+            
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    goToSlide(index);
+                });
+            });
+            
+            carouselTrack.addEventListener('click', function(e) {
+                const link = e.target.closest('.carousel-link');
+                if (!link) return;
+                
+                e.preventDefault();
+                
+                if (link.classList.contains('active')) {
+                    const pageId = link.dataset.pageId;
+                    const targetPage = document.getElementById(`page${pageId}`);
+                    
+                    document.querySelectorAll('.page-content').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    if (targetPage) {
+                        targetPage.classList.add('active');
+                        targetPage.scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        stopAutoRotate();
+                        setTimeout(startAutoRotate, 5000);
+                    }
+                } else {
+                    const index = parseInt(link.dataset.index);
+                    goToSlide(index);
+                }
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') {
+                    goToPrevSlide();
+                } else if (e.key === 'ArrowRight') {
+                    goToNextSlide();
+                }
+            });
+        }
+        
+        function goToPrevSlide() {
+            currentIndex = (currentIndex - 1 + pageData.length) % pageData.length;
+            updateCarousel();
+            restartAutoRotate();
+        }
+        
+        function goToNextSlide() {
+            currentIndex = (currentIndex + 1) % pageData.length;
+            updateCarousel();
+            restartAutoRotate();
+        }
+        
+        function goToSlide(index) {
+            currentIndex = index;
+            updateCarousel();
+            restartAutoRotate();
+        }
+        
+        function stopAutoRotate() {
+            clearInterval(autoRotateInterval);
+        }
+        
+        function restartAutoRotate() {
+            stopAutoRotate();
+            startAutoRotate();
+        }
+        
+        function setupSnowfall() {
+            const snowButton = document.getElementById('snowButton');
+            let isSnowing = false;
+            let snowInterval;
+            let snowContainer;
+            
+            snowButton.addEventListener('click', function() {
+                isSnowing = !isSnowing;
+                
+                if (isSnowing) {
+                    this.classList.add('active');
+                    this.innerHTML = '<i class="fas fa-stop"></i>';
+                    startSnowfall();
+                } else {
+                    this.classList.remove('active');
+                    this.innerHTML = '<i class="fas fa-snowflake"></i>';
+                    stopSnowfall();
+                }
+            });
+            
+            function startSnowfall() {
+                snowContainer = document.createElement('div');
+                snowContainer.id = 'snowContainer';
+                snowContainer.style.position = 'fixed';
+                snowContainer.style.top = '0';
+                snowContainer.style.left = '0';
+                snowContainer.style.width = '100%';
+                snowContainer.style.height = '100%';
+                snowContainer.style.pointerEvents = 'none';
+                snowContainer.style.zIndex = '999';
+                document.body.appendChild(snowContainer);
+                
+                snowInterval = setInterval(() => {
+                    for (let i = 0; i < 3; i++) {
+                        createSnowflake();
+                    }
+                }, 100);
+            }
+            
+            function createSnowflake() {
+                const snowflake = document.createElement('div');
+                snowflake.innerHTML = '❄';
+                snowflake.style.position = 'absolute';
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.top = '-20px';
+                snowflake.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+                snowflake.style.color = 'white';
+                snowflake.style.textShadow = '0 0 5px rgba(255,255,255,0.5)';
+                snowflake.style.filter = 'drop-shadow(1px 1px 1px rgba(0,0,0,0.1))';
+                snowContainer.appendChild(snowflake);
+                
+                let posY = -20;
+                const fallSpeed = Math.random() * 2 + 1;
+                const sway = Math.random() * 4 - 2;
+                let posX = parseFloat(snowflake.style.left);
+                
+                const fallInterval = setInterval(() => {
+                    posY += fallSpeed;
+                    posX += sway * 0.1;
+                    snowflake.style.top = posY + 'px';
+                    snowflake.style.left = posX + 'vw';
+                    
+                    if (posY > window.innerHeight) {
+                        clearInterval(fallInterval);
+                        snowflake.remove();
+                    }
+                }, 20);
+                
+                setTimeout(() => {
+                    snowflake.remove();
+                    clearInterval(fallInterval);
+                }, 10000);
+            }
+            
+            function stopSnowfall() {
+                clearInterval(snowInterval);
+                if (snowContainer) {
+                    snowContainer.remove();
+                }
+            }
+        }
+        
+        function startAutoRotate() {
+            autoRotateInterval = setInterval(() => {
+                goToNextSlide();
+            }, 5000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingCandies();
+            generateCarousel();
+            generatePages();
+            setupCarouselClicks();
+            setupSnowfall();
+            startAutoRotate();
+        });
+    </script>
+    
+</body>
+</html>
